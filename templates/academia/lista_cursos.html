@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestros Cursos de Inglés</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #f4f6f9; 
+            margin: 0; 
+            padding: 40px; 
+            color: #333; 
+        }
+        h1 { 
+            color: #2c3e50; 
+            text-align: center; 
+            margin-bottom: 30px; 
+        }
+        .contenedor-cursos { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 20px; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+        }
+        .tarjeta-curso { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+            border-top: 5px solid #3498db; 
+        }
+        .tarjeta-curso h2 { 
+            margin-top: 0; 
+            color: #2980b9; 
+        }
+        .nivel { 
+            background: #e8f4fd; 
+            color: #2980b9; 
+            padding: 4px 8px; 
+            border-radius: 4px; 
+            font-size: 0.9em; 
+            font-weight: bold; 
+            display: inline-block; 
+        }
+        .no-cursos { 
+            text-align: center; 
+            grid-column: 1 / -1; 
+            color: #7f8c8d; 
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📚 Panel de Cursos - Academia de Inglés</h1>
+
+    <div class="contenedor-cursos">
+        {% for curso in cursos %}
+            <div class="tarjeta-curso">
+                <h2>{{ curso.nombre }}</h2>
+                <p><span class="nivel">Nivel: {{ curso.nivel }}</span></p>
+                <p>{{ curso.descripcion }}</p>
+            </div>
+        {% empty %}
+            <p class="no-cursos">¡Aún no hay cursos registrados! Ve al panel de administración para añadir el primero.</p>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
