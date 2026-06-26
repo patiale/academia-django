@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenidos - Academia</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .hero {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+        }
+        .hero h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .hero p {
+            font-size: 1.2em;
+            margin: 15px 0 30px 0;
+            opacity: 0.9;
+        }
+        .btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: #c0392b;
+        }
+        .contenido {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .valores {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <h1>✨ Bienvenidos a Nuestra Academia</h1>
+        <p>Un espacio dedicado al crecimiento, el aprendizaje y el desarrollo integral.</p>
+        <!-- Este botón usa las etiquetas de Django para buscar la URL de los cursos automáticamente -->
+        <a href="{% url 'lista_cursos' %}" class="btn">Ver Cursos Disponibles</a>
+    </div>
+
+    <div class="contenido">
+        <div class="valores">
+            <h2>Nuestra Visión</h2>
+            <p>Impulsamos una educación con propósito, enfocada no solo en la excelencia académica, sino en sembrar principios sólidos para la vida y caminar guiados conforme a la palabra de Dios.</p>
+        </div>
+    </div>
+
+</body>
+</html>
