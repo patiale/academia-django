@@ -1,9 +1,22 @@
 from django.contrib import admin
-from .models import Curso, ContenidoEducativo, EstudiantePerfil, Nota, Pago
+from django.contrib import admin
+from .models import (
+    Curso, 
+    ContenidoEducativo, 
+    PerfilEstudiante, 
+    ProgresoHabilidades, 
+    Profesor, 
+    ClaseEnVivo, 
+    AsistenciaClaseVivo, 
+    RegistroPago
+)
 
-# Registramos cada modelo para que se dibuje en tu navegador
+# Registramos cada modelo una única vez
 admin.site.register(Curso)
 admin.site.register(ContenidoEducativo)
-admin.site.register(EstudiantePerfil)
-admin.site.register(Nota)
-admin.site.register(Pago)
+admin.site.register(PerfilEstudiante)
+admin.site.register(ProgresoHabilidades)
+admin.site.register(Profesor)
+admin.site.register(ClaseEnVivo)
+admin.site.register(AsistenciaClaseVivo)
+admin.site.register(RegistroPago)

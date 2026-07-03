@@ -1,38 +1,41 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenidos - Academia</title>
-    <style>
+{% extends "academia/base.html" %}
+
+{% block content %}
+
+<style>
+        /* Estilos base sin romper el Flexbox de Bootstrap */
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f6f9;
             color: #333;
-            display: flex;
-            flex-direction: column;
             min-height: 100vh;
         }
+
+        /* Sección del Banner Principal */
         .hero {
             background: linear-gradient(135deg, #2c3e50, #3498db);
             color: white;
             text-align: center;
             padding: 80px 20px;
+            width: 100%;
         }
+
         .hero h1 {
             margin: 0;
             font-size: 2.5em;
         }
+
         .hero p {
             font-size: 1.2em;
             margin: 15px 0 30px 0;
-            opacity: 0.9;
         }
-        .btn {
+
+        /* Botón personalizado del Banner */
+        .btn-hero {
             background-color: #e74c3c;
-            color: white;
+            color: white !important;
             padding: 12px 24px;
             text-decoration: none;
             font-weight: bold;
@@ -40,24 +43,29 @@
             transition: background 0.3s;
             display: inline-block;
         }
-        .btn:hover {
+
+        .btn-hero:hover {
             background-color: #c0392b;
         }
-        .contenido {
+
+        /* Contenedor de la Visión (Solo se usa en Inicio) */
+        .contenido-vision {
             max-width: 800px;
             margin: 40px auto;
             padding: 0 20px;
             text-align: center;
         }
-        .valores {
+
+        .valores-vision {
             background: white;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px rgba(0,0,0,0,05);
         }
     </style>
-</head>
-<body>
+
+    </style>
+
 
     <div class="hero">
         <h1>✨ Bienvenidos a Nuestra Academia</h1>
@@ -66,12 +74,8 @@
         <a href="{% url 'lista_cursos' %}" class="btn">Ver Cursos Disponibles</a>
     </div>
 
-    <div class="contenido">
-        <div class="valores">
-            <h2>Nuestra Visión</h2>
-            <p>Impulsamos una educación con propósito, enfocada no solo en la excelencia académica, sino en sembrar principios sólidos para la vida y caminar guiados conforme a la palabra de Dios.</p>
-        </div>
-    </div>
+</div>
 
-</body>
-</html>
+
+
+{% endblock %}
