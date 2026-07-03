@@ -139,16 +139,33 @@ class Inscripcion(models.Model):
     def __str__(self):
         return f"{self.estudiante.user.username} - {self.curso.nombre}"
     
-class Inscripcion(models.Model):
-    estudiante = models.ForeignKey(PerfilEstudiante, on_delete=models.CASCADE, related_name='inscripciones_cursos')
-    curso = models.ForeignKey(Curso, on_delete=models.CASCADE, related_name='estudiantes_inscritos')
-    fecha_inscripcion = models.DateTimeField(auto_now_add=True)
-    pago_verificado = models.BooleanField(default=False, verbose_name="Pago Verificado")
+# ==========================================
+# 5. Record estudiante
+# ==========================================
+class RecordAcademico(models.Model):
+    # Relación principal con el estudiante y el curso
+    estudiante = models.ForeignKey(PerfilEstudiante, on_delete=models.CASCADE, related_name='records')
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE, related_name='records')
+    
+    # Información académica detallada
+    periodo_academico = models.CharField(max_length=50, verbose_name="Periodo (ej. 2026-I)")
+    fecha_finalizacion = models.DateField(null=True, blank=True, verbose_name="Fecha de Finalización")
+    
+    # Calificación y rendimiento
+    calificacion_final = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name="Calificación Final")
+    observaciones = models.TextField(null=True, blank=True, verbose_name="Observaciones o Comentarios del Docente")
+    
+    # Estatus del récord
+    ESTADO_ACADEMICO = [
+        ('Aprobado', 'Aprobado'),
+        ('Reprobado', 'Reprobado'),
+        ('En proceso', 'En proceso'),
+    ]
+    estado = models.CharField(max_length=20, choices=ESTADO_ACADEMICO, default='En proceso', verbose_name="Estado Académico")
 
     class Meta:
-        verbose_name = "Inscripción"
-        verbose_name_plural = "Inscripciones"
-        unique_together = ('estudiante', 'curso') # Evita inscripciones duplicadas
+        verbose_name = "Récord Académico"
+        verbose_name_plural = "Récords Académicos"
 
     def __str__(self):
-        return f"{self.estudiante.user.username} - {self.curso.nombre}"
+        return f"Récord: {self.estudiante.user.username} - {self.curso.nombre} ({self.periodo_academico})"

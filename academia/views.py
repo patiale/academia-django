@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, TemplateView, CreateView, View
 
+
 # Importamos tus modelos y formularios locales
 from .models import Curso, Inscripcion, PerfilEstudiante
 from .forms import RegistroPagoForm
@@ -47,3 +48,15 @@ class InscribirCursoView(LoginRequiredMixin, View):
             messages.info(request, f"Ya tienes una solicitud de inscripción en curso para {curso.nombre}.")
             
         return redirect('area_pagos')
+    
+    # 5. RÉCORD ACADÉMICO DEL ESTUDIANTE
+class RecordEstudianteView(LoginRequiredMixin, ListView):
+    model = PerfilEstudiante
+    template_name = 'academia/record_estudiante.html'
+    context_object_name = 'inscripciones'
+
+    def get_queryset(self):
+        # Buscamos el perfil del estudiante logueado actual
+        perfil = get_object_or_404(PerfilEstudiante, user=self.request.user)
+        # Filtramos para mostrar únicamente las inscripciones de este alumno
+        return Inscripcion.objects.filter(estudiante=perfil).order_by('-fecha_inscripcion')
