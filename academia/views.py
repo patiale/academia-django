@@ -4,13 +4,11 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, TemplateView, CreateView, View
 
-
 # Importamos tus modelos y formularios locales
 from .models import Curso, Inscripcion, PerfilEstudiante
 from .forms import RegistroPagoForm
 
 from django.contrib.auth.views import LoginView, LogoutView
-from django.urls import reverse_lazy
 
 # 1. VISTA DE INICIO
 class InicioView(TemplateView):
@@ -31,7 +29,7 @@ class AreaPagosView(CreateView):
     def form_valid(self, form):
         return super().form_valid(form)
 
-# 4. PROCESAR INSCRIPCIÓN (Corregido get_object_or_404)
+# 4. PROCESAR INSCRIPCIÓN
 class InscribirCursoView(LoginRequiredMixin, View):
     def post(self, request, curso_id):
         curso = get_object_or_404(Curso, id=curso_id)
@@ -52,7 +50,7 @@ class InscribirCursoView(LoginRequiredMixin, View):
             
         return redirect('area_pagos')
     
-    # 5. RÉCORD ACADÉMICO DEL ESTUDIANTE
+# 5. RÉCORD ACADÉMICO DEL ESTUDIANTE
 class RecordEstudianteView(LoginRequiredMixin, ListView):
     model = PerfilEstudiante
     template_name = 'academia/record_estudiante.html'
@@ -64,14 +62,14 @@ class RecordEstudianteView(LoginRequiredMixin, ListView):
         # Filtramos para mostrar únicamente las inscripciones de este alumno
         return Inscripcion.objects.filter(estudiante=perfil).order_by('-fecha_inscripcion')
     
+# 6. LOGIN DE USUARIOS
 class MiLoginView(LoginView):
-    template_name = 'login.html' # Debes crear este archivo
+    template_name = 'login.html'
     redirect_authenticated_user = False
     
     def get_success_url(self):
-        return reverse_lazy('inicio') # O la ruta a la que quieras redirigir tras loguear
+        return reverse_lazy('inicio')
 
+# 7. LOGOUT DE USUARIOS (Muestra tu plantilla de despedida)
 class MiLogoutView(LogoutView):
-    # Al definir next_page, Django realiza un redirect inmediato 
-    # y ya no busca un template de 'logged_out.html'
-    next_page = reverse_lazy('login') # Redirige al login al cerrar sesión
+    template_name = 'logout.html'

@@ -119,5 +119,5 @@ STATIC_URL = 'static/'
 
 # Configuración de autenticación
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'inicio'
+LOGIN_REDIRECT_URL = 'login'
 LOGOUT_REDIRECT_URL = 'login'
