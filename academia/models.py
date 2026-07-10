@@ -82,6 +82,11 @@ class ClaseEnVivo(models.Model):
     nivel_sugerido = models.CharField(max_length=10, default='A1')
     url_zoom_meet = models.URLField(max_length=255)
     capacidad_maxima = models.IntegerField(default=15)
+    curso = models.ForeignKey('Curso', on_delete=models.CASCADE, related_name='clases_en_vivo')
+    esta_activa = models.BooleanField(default=True)
+
+    titulo_sesion = models.CharField(max_length=200)
+    # ... tus otros campos (fecha_hora_inicio, profesor, etc.)
 
     def __str__(self):
         return f"{self.titulo_sesion} - {self.fecha_hora_inicio.strftime('%d/%m/%Y %H:%M')}"
@@ -169,3 +174,4 @@ class RecordAcademico(models.Model):
 
     def __str__(self):
         return f"Récord: {self.estudiante.user.username} - {self.curso.nombre} ({self.periodo_academico})"
+

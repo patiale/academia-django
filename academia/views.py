@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, TemplateView, CreateView, View
 
 # Importamos tus modelos y formularios locales
-from .models import Curso, Inscripcion, PerfilEstudiante
+from .models import Curso, Inscripcion, PerfilEstudiante, ClaseEnVivo, Inscripcion
 from .forms import RegistroPagoForm
 
 from django.contrib.auth.views import LoginView, LogoutView
@@ -73,3 +73,21 @@ class MiLoginView(LoginView):
 # 7. LOGOUT DE USUARIOS (Muestra tu plantilla de despedida)
 class MiLogoutView(LogoutView):
     template_name = 'logout.html'
+
+class ListaClasesEnVivoView(LoginRequiredMixin, ListView):
+    model = ClaseEnVivo
+    template_name = 'clases_en_vivo.html'
+    context_object_name = 'clases'
+
+    def get_queryset(self):
+        # Filtramos para que el alumno solo vea las clases en vivo 
+        # de los cursos a los que se ha pre-inscrito o inscrito
+        cursos_alumno = Inscripcion.objects.filter(
+            estudiante__user=self.request.user
+        ).values_list('curso_id', flat=True)
+        
+        # Retorna las clases activas de esos cursos ordenadas por la más cercana
+        return ClaseEnVivo.objects.filter(
+            curso_id__in=cursos_alumno, 
+            esta_activa=True
+        ).order_by('fecha_hora_inicio')

@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import ListaClasesEnVivoView
 
 urlpatterns = [
     # Rutas principales de la academia
@@ -12,4 +13,5 @@ urlpatterns = [
     # Autenticación (Usando tus vistas personalizadas)
     #path('', views.MiLoginView.as_view(), name='login'),
     path('logout/', views.MiLogoutView.as_view(), name='logout'),
+    path('clases-en-vivo/', ListaClasesEnVivoView.as_view(), name='clases_en_vivo'),
 ]
