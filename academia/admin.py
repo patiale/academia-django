@@ -8,7 +8,8 @@ from .models import (
     Profesor, 
     ClaseEnVivo, 
     AsistenciaClaseVivo, 
-    RegistroPago
+    RegistroPago,
+    Inscripcion
 )
 
 # Registramos cada modelo una única vez
@@ -20,3 +21,4 @@ admin.site.register(Profesor)
 admin.site.register(ClaseEnVivo)
 admin.site.register(AsistenciaClaseVivo)
 admin.site.register(RegistroPago)
+admin.site.register(Inscripcion)

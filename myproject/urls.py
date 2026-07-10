@@ -1,23 +1,15 @@
-"""
-URL configuration for myproject project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/6.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
-from django.urls import path, include  # <-- Aquí agregamos 'include'
+from django.urls import path, include
+# Importa tu vista de login desde la aplicación 'academia'
+from academia.views import MiLoginView 
 
 urlpatterns = [
+    # 1. Acceso al panel de administración
     path('admin/', admin.site.urls),
-    path('', include('academia.urls')),  # <-- Vincula las rutas de tu app
+    
+    # 2. Página inicial (la raíz '' ahora es el login)
+    path('', MiLoginView.as_view(), name='login'),
+    
+    # 3. Resto de las rutas de tu aplicación bajo el prefijo 'academia/'
+    path('academia/', include('academia.urls')),
 ]

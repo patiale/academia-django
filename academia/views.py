@@ -9,6 +9,9 @@ from django.views.generic import ListView, TemplateView, CreateView, View
 from .models import Curso, Inscripcion, PerfilEstudiante
 from .forms import RegistroPagoForm
 
+from django.contrib.auth.views import LoginView, LogoutView
+from django.urls import reverse_lazy
+
 # 1. VISTA DE INICIO
 class InicioView(TemplateView):
     template_name = 'academia/inicio.html'
@@ -60,3 +63,15 @@ class RecordEstudianteView(LoginRequiredMixin, ListView):
         perfil = get_object_or_404(PerfilEstudiante, user=self.request.user)
         # Filtramos para mostrar únicamente las inscripciones de este alumno
         return Inscripcion.objects.filter(estudiante=perfil).order_by('-fecha_inscripcion')
+    
+class MiLoginView(LoginView):
+    template_name = 'login.html' # Debes crear este archivo
+    redirect_authenticated_user = False
+    
+    def get_success_url(self):
+        return reverse_lazy('inicio') # O la ruta a la que quieras redirigir tras loguear
+
+class MiLogoutView(LogoutView):
+    # Al definir next_page, Django realiza un redirect inmediato 
+    # y ya no busca un template de 'logged_out.html'
+    next_page = reverse_lazy('login') # Redirige al login al cerrar sesión
