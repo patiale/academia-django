@@ -6,7 +6,7 @@ from django.views.generic import ListView, TemplateView, CreateView, View
 
 # Importamos tus modelos y formularios locales
 from .models import Curso, Inscripcion, PerfilEstudiante, ClaseEnVivo, Inscripcion
-from .forms import RegistroPagoForm
+from .forms2 import RegistroPagoForm
 
 from django.contrib.auth.views import LoginView, LogoutView
 
