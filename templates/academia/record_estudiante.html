@@ -1,0 +1,74 @@
+{% extends 'academia/base.html' %}
+
+{% block content %}
+<div class="container-fluid text-dark">
+    
+    <div class="mb-4">
+        <h2 class="fw-bold text-dark">🎓 Mi Récord Académico</h2>
+        <p class="text-muted">Consulta el estado de tus niveles, inscripciones activas y solicitudes procesadas.</p>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="p-3 bg-white rounded shadow-sm border-start border-primary border-4">
+                <span class="text-muted small d-block">Estudiante</span>
+                <span class="fw-bold text-dark">{{ request.user.username }}</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 bg-white rounded shadow-sm border-start border-success border-4">
+                <span class="text-muted small d-block">Estatus General</span>
+                <span class="badge bg-success mt-1">Activo</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 bg-white">
+        <div class="card-body p-4">
+            <h4 class="fw-bold mb-3 text-secondary" style="font-size: 1.1em;">Historial de Inscripciones</h4>
+            
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light text-secondary small text-uppercase">
+                        <tr>
+                            <th>Curso / Nivel</th>
+                            <th>Fecha de Solicitud</th>
+                            <th>Estado del Curso</th>
+                            <th>Estatus del Pago</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for inscripcion in inscripciones %}
+                        <tr>
+                            <td>
+                                <span class="fw-bold text-dark d-block">{{ inscripcion.curso.nombre }}</span>
+                                <span class="text-muted small">Nivel: {{ inscripcion.curso.get_nivel_display }}</span>
+                            </td>
+                            <td class="text-secondary">{{ inscripcion.fecha_inscripcion|date:"d/m/Y" }}</td>
+                            <td>
+                                <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2 py-1">
+                                    Preinscrito
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-2 py-1">
+                                    Pendiente por Validar
+                                </span>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center py-4 text-muted">
+                                <i class="bi bi-excon-circle d-block mb-2 fs-4"></i>
+                                Aún no posees un registro de cursos inscritos en este período.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

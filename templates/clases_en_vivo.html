@@ -1,0 +1,76 @@
+{% extends 'academia/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="fw-bold text-dark"><i class="bi bi-broadcast text-danger me-2"></i> Clases en Vivo Programadas</h2>
+            <p class="text-muted">Accede a tus sesiones síncronas y conéctate con tus instructores.</p>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for clase in object_list %}
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 {% if clase.esta_sucediendo_ahora %}border-start border-danger border-4{% endif %}" style="border-radius: 12px;">
+                    <div class="card-body p-4 d-flex flex-column">
+                        
+                        <!-- Estado e información de curso -->
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-secondary opacity-75 fw-medium">{{ clase.curso.nombre }}</span>
+                            {% if clase.esta_sucediendo_ahora %}
+                                <span class="badge bg-danger animate-pulse"><i class="bi bi-record-fill me-1"></i> EN VIVO AHORA</span>
+                            {% else %}
+                                <span class="badge bg-light text-dark fw-normal border"><i class="bi bi-calendar3 me-1"></i> Programada</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Título y Detalles -->
+                        <h4 class="card-title fw-bold text-dark mb-2">{{ clase.titulo }}</h4>
+                        <p class="text-muted small flex-grow-1">
+                            {% if clase.descripcion %}{{ clase.descripcion }}{% else %}No hay descripción adicional para esta sesión.{% endif %}
+                        </p>
+
+                        <hr class="text-muted opacity-25">
+
+                        <!-- Horario -->
+                        <div class="d-flex align-items-center text-secondary small mb-3">
+                            <i class="bi bi-clock me-2 text-primary"></i>
+                            <span>{{ clase.fecha_hora|date:"d \d\e F, Y - g:i a" }}</span>
+                        </div>
+
+                        <!-- Botón de Acción dinámico -->
+                        <div class="d-grid mt-auto">
+                            <a href="{{ clase.enlace_reunion }}" target="_blank" 
+                               class="btn {% if clase.esta_sucediendo_ahora %}btn-danger{% else %}btn-outline-primary{% endif %} fw-medium shadow-sm">
+                                <i class="bi bi-camera-video me-2"></i> Unirse a la Clase
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center py-5">
+                <div class="text-muted mb-3">
+                    <i class="bi bi-calendar-x" style="font-size: 3rem;"></i>
+                </div>
+                <h5 class="fw-bold text-secondary">No tienes clases en vivo agendadas</h5>
+                <p class="text-muted small">Cuando tus profesores programen una sesión para tus cursos, aparecerá en esta sección.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Pequeño estilo opcional para que el badge de "EN VIVO" titile sutilmente -->
+<style>
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
+    .animate-pulse {
+        animation: pulse 2s infinite;
+    }
+</style>
+{% endblock %}

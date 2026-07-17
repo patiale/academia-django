@@ -1,0 +1,68 @@
+{% extends 'academia/inicio.html' %}
+{% block content %}
+
+<div class="container mt-5 text-dark">
+    <div class="row">
+        
+        <div class="col-md-5 mb-4">
+            <div class="card shadow-sm border-0 bg-light p-3">
+                <div class="card-body">
+                    <h4 class="card-title text-primary mb-4 fw-bold">Datos de Pago de la Academia</h4>
+                    
+                    <div class="mb-4">
+                        <h5 class="fw-bold text-secondary">♦ Pago Móvil</h5>
+                        <p class="mb-1"><strong>Banco:</strong> Banco de Venezuela (0102)</p>
+                        <p class="mb-1"><strong>Teléfono:</strong> 0412-1234567</p>
+                        <p class="mb-0"><strong>Cédula / RIF:</strong> V-12345678</p>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="mb-4">
+                        <h5 class="fw-bold text-secondary">♦ Transferencia Bancaria</h5>
+                        <p class="mb-1"><strong>Banco:</strong> Banco Mercantil</p>
+                        <p class="mb-1"><strong>Cuenta Corriente:</strong> 0105-XXXX-XX-XXXXXXXXXX</p>
+                        <p class="mb-0"><strong>Titular:</strong> Academia de Inglés C.A.</p>
+                    </div>
+                    
+                    <div class="alert alert-info mt-3" role="alert">
+                        <small>💡 <strong>Nota:</strong> Realiza tu pago primero y luego registra los datos exactos del comprobante a la derecha.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div class="card shadow-sm border-0 p-3">
+                <div class="card-body">
+                    <h3 class="card-title text-dark mb-4 fw-bold">Reportar Pago</h3>
+                    
+                    <form method="POST" enctype="multipart/form-data" autocomplete="off">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-secondary">Monto Pagado</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                {{ form.monto }}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-secondary">Referencia de la Transacción</label>
+                            {{ form.referencia_transaccion }}
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Enviar Reporte</button>
+                            <a href="{% url 'inicio' %}" class="btn btn-outline-secondary">Volver al Panel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
